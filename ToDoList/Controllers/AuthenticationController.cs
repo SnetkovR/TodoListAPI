@@ -45,7 +45,7 @@ namespace ToDoList.Controllers
                 return BadRequest(error);
             }
 
-            if (user.Result.PasswordHash != HashPassword(authRequest.Password))
+            if (user.Result.PasswordHash != Authenticator.HashPassword(authRequest.Password))
             {
                 var error = ServiceErrorResponses.IncorrectPassword();
                 return BadRequest(error);
@@ -70,16 +70,5 @@ namespace ToDoList.Controllers
             return jwtToken;
         }
 
-        // TODO Перенести в отдельную сущность 
-        private string HashPassword(string password)
-        {
-            using (var md5 = MD5.Create())
-            {
-                var passwordBytes = Encoding.UTF8.GetBytes(password);
-                var hashBytes = md5.ComputeHash(passwordBytes);
-                var hash = BitConverter.ToString(hashBytes);
-                return hash;
-            }
-        }
     }
 }

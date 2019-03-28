@@ -9,9 +9,9 @@ using ClientModels.Users;
 
 namespace ToDoList
 {
-    public class Authenticator
+    public static class Authenticator
     {
-        private string HashPassword(string password)
+        public static string HashPassword(string password)
         {
             using (var md5 = MD5.Create())
             {

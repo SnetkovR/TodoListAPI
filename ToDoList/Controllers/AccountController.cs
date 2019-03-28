@@ -35,9 +35,8 @@ namespace ToDoList.Controllers
                 return BadRequest(error);
             }
 
-            // TODO Эта операция делается конвертором
             var info = new UserCreationInfo(registrationInfo.Login,
-                HashPassword(registrationInfo.Password));
+                Authenticator.HashPassword(registrationInfo.Password));
             try
             {
                 await _userRepository.CreateAsync(info, cancellationToken);
@@ -50,16 +49,5 @@ namespace ToDoList.Controllers
             return Ok();
         }
 
-        // Вынести в отдельный класс
-        private string HashPassword(string password)
-        {
-            using (var md5 = MD5.Create())
-            {
-                var passwordBytes = Encoding.UTF8.GetBytes(password);
-                var hashBytes = md5.ComputeHash(passwordBytes);
-                var hash = BitConverter.ToString(hashBytes);
-                return hash;
-            }
-        }
     }
 }
