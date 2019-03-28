@@ -28,14 +28,6 @@ namespace ToDoList.Controllers
             _userRepository = userRepository;
         }
 
-        [Route("getlogin")]
-        public IActionResult GetLogin()
-        {
-            var nameIdentifier = this.HttpContext.User.Claims
-                .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-            return Ok($"Ваш логин: {nameIdentifier.Value}");
-        }
-
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> CreateNoteAsync([FromBody]ClientModels.Todos.TodoBuildInfo buildInfo, CancellationToken cancellationToken)

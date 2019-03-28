@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Models.Users;
 using MongoDB.Driver;
+using Swashbuckle.AspNetCore.Swagger;
 using ToDoList.JWT;
 using ToDoList.Services;
 
@@ -68,6 +69,15 @@ namespace ToDoList
                         ClockSkew = TimeSpan.FromSeconds(5)
                     };
                 });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Test API",
+                    Description = "ASP.NET Core Web API"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,13 +95,13 @@ namespace ToDoList
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMvc();
-        }
+            app.UseMvcWithDefaultRoute();
 
-        private static void SetAuthenticationOptions(AuthenticationOptions options)
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API V1");
+            });
         }
     }
 }
