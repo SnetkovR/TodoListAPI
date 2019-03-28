@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClientModels.Notes
+namespace ClientModels.Todos
 {
-    public class NoteInfo
+    /// <summary>
+    /// Информация о задаче
+    /// </summary>
+    public class TodoInfo
     {
         /// <summary>
-        /// Идентификатор заметки
+        /// Идентификатор задачи
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// Идентификатор пользователя, которому принадлежит заметка
+        /// Идентификатор пользователя, которому принадлежит задача
         /// </summary>
         public string UserId { get; set; }
 
         /// <summary>
-        /// Дата создания заметки
+        /// Дата создания задачи
         /// </summary>
         public DateTime CreatedAt { get; set; }
 
@@ -26,17 +29,12 @@ namespace ClientModels.Notes
         public DateTime LastUpdatedAt { get; set; }
 
         /// <summary>
-        /// Флаг, указывающий, находится заметка в избранном или нет
-        /// </summary>
-        public bool Favorite { get; set; }
-
-        /// <summary>
-        /// Название заметки
+        /// Название задачи
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Теги заметки
+        /// Теги задачи
         /// </summary>
         public IReadOnlyList<string> Tags { get; set; }
     }

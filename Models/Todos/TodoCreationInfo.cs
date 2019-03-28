@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Models.Notes
+namespace Models.Todos
 {
-    public class NoteCreationInfo
+    public class TodoCreationInfo
     {
-        public NoteCreationInfo(Guid userId, string title, string text, IEnumerable<string> tags = null)
+        public TodoCreationInfo(Guid userId, string title, string text, IEnumerable<string> tags = null)
         {
             this.UserId = userId;
             this.Title = title ?? throw new ArgumentNullException(nameof(title));
@@ -20,17 +20,17 @@ namespace Models.Notes
         public Guid UserId { get; }
 
         /// <summary>
-        /// Заголовок заметки
+        /// Заголовок задачи
         /// </summary>
         public string Title { get; }
 
         /// <summary>
-        /// Текст заметки
+        /// Текст задачи
         /// </summary>
         public string Text { get; }
 
         /// <summary>
-        /// Теги заметки
+        /// Теги задачи
         /// </summary>
         public IReadOnlyList<string> Tags { get; }
     }

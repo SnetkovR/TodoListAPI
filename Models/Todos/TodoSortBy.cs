@@ -1,6 +1,6 @@
-﻿namespace Models.Notes
+﻿namespace Models.Todos
 {
-    public enum NoteSortBy
+    public enum TodoSortBy
     {
         /// <summary>
         /// Сортировкаи по дате создания

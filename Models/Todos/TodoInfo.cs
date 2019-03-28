@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Models.Notes
+namespace Models.Todos
 {
-    public class NoteInfo
+    public class TodoInfo
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [BsonElement("UserId")]
         public Guid UserId { get; set; }
@@ -19,9 +18,6 @@ namespace Models.Notes
 
         [BsonElement("LastUpdatedAt")]
         public DateTime LastUpdatedAt { get; set; }
-
-        [BsonElement("Favorite")]
-        public bool Favorite { get; set; }
 
         [BsonElement("Title")]
         public string Title { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ClientModels.Users
 {
-    class UserRegistrationInfo
+    public class UserRegistrationInfo
     {
         /// <summary>
         /// Логин пользователя

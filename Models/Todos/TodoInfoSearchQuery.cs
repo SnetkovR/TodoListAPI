@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClientModels.Notes
+namespace Models.Todos
 {
-    public class NoteInfoSearchQuery
+    public class TodoInfoSearchQuery
     {
         /// <summary>
         /// Позиция, начиная с которой нужно производить поиск
@@ -11,29 +11,24 @@ namespace ClientModels.Notes
         public int? Offset { get; set; }
 
         /// <summary>
-        /// Максимальеное количество заметок, которое нужно вернуть
+        /// Максимальное количество задач, которое нужно вернуть
         /// </summary>
         public int? Limit { get; set; }
 
         /// <summary>
-        /// Пользователь, которому принадлежит заметка
+        /// Пользователь, которому принадлежит задача
         /// </summary>
-        public string UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         /// <summary>
-        /// Минимальная дата создания заметки
+        /// Минимальная дата создания задачи
         /// </summary>
         public DateTime? CreatedFrom { get; set; }
 
         /// <summary>
-        /// Максимальная дата создания заметки
+        /// Максимальная дата создания задачи
         /// </summary>
         public DateTime? CreatedTo { get; set; }
-
-        /// <summary>
-        /// Искать по параметру "в избранном"
-        /// </summary>
-        public bool? Favorite { get; set; }
 
         /// <summary>
         /// Тип сортировки
@@ -41,12 +36,12 @@ namespace ClientModels.Notes
         public SortType? Sort { get; set; }
 
         /// <summary>
-        /// Аспект заметки, по которому нужно искать
+        /// Аспект задачи, по которому нужно искать
         /// </summary>
-        public NoteSortBy? SortBy { get; set; }
+        public TodoSortBy? SortBy { get; set; }
 
         /// <summary>
-        /// Теги заметок
+        /// Теги задач
         /// </summary>
         public IReadOnlyList<string> Tags { get; set; }
     }

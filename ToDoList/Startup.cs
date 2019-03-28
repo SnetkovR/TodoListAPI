@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Models.Users;
 using MongoDB.Driver;
 using ToDoList.JWT;
 using ToDoList.Services;
@@ -34,26 +38,29 @@ namespace ToDoList
             var signingKey = new SigningSymmetricKey(signingSecurityKey);
             services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
 
-            services.AddScoped<NoteService>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<TodoService>();
+            services.AddScoped<UserRepository>();
 
             const string jwtSchemeName = "JwtBearer";
             var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services
-                .AddAuthentication(options => {
-                    options.DefaultAuthenticateScheme = jwtSchemeName;
-                    options.DefaultChallengeScheme = jwtSchemeName;
-                })
-                .AddJwtBearer(jwtSchemeName, jwtBearerOptions => {
+                .AddAuthentication()
+                .AddJwtBearer(jwtBearerOptions =>
+                {
+                    jwtBearerOptions.SaveToken = true;
+                    jwtBearerOptions.RequireHttpsMetadata = true;
+
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = signingDecodingKey.GetKey(),
 
-                        ValidateIssuer = true,
+                        ValidateIssuer = false,
                         ValidIssuer = "ToDoList",
 
-                        ValidateAudience = true,
+                        ValidateAudience = false,
                         ValidAudience = "Client",
 
                         ValidateLifetime = true,
@@ -79,6 +86,12 @@ namespace ToDoList
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private static void SetAuthenticationOptions(AuthenticationOptions options)
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }
     }
 }

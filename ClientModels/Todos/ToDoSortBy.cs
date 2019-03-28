@@ -1,6 +1,6 @@
-﻿namespace ClientModels.Notes
+﻿namespace ClientModels.Todos
 {
-    public enum NoteSortBy
+    public enum TodoSortBy
     {
         /// <summary>
         /// Сортировкаи по дате создания
